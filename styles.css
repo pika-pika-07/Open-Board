@@ -5,3 +5,71 @@ body {
   margin: 0;
   padding: 0;
 }
+.options-container {
+  height: 3rem;
+  width: 3rem;
+  background-color: pink;
+  position: absolute;
+  top: 2rem;
+  left: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  font-size: 1.2rem;
+}
+img {
+  display: block;
+}
+.tools-container {
+  display: flex;
+  height: 3.5rem;
+  width: 74vw;
+  background-color: yellow;
+  justify-content: space-around;
+  position: absolute;
+  top: 1.5rem;
+  left: 20vw; /* It means 10% of the entire screen width */
+}
+.tools-container > * {
+  display: block;
+  width: 2.5rem;
+}
+.pencil-tool-container {
+  height: 4rem;
+  width: 5.5rem;
+  background-color: yellow;
+  position: absolute;
+  top: 5rem;
+  left: 20vw;
+}
+.pencil-width-container {
+  height: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.pencil-width-container input {
+  width: 80%;
+}
+.pencil-color-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  height: calc(100% - 2rem);
+}
+.pencil-color {
+  width: 1rem;
+  height: 1rem;
+  border-radius: 50%;
+}
+.blue {
+  background-color: blue;
+}
+.red {
+  background-color: red;
+}
+.green {
+  background-color: green;
+}
