@@ -73,3 +73,18 @@ img {
 .green {
   background-color: green;
 }
+
+.eraser-tool-container {
+  height: 2rem;
+  width: 5rem;
+  background-color: yellow;
+  position: absolute;
+  top: 5rem;
+  left: 32vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.eraser-tool-container input {
+  width: 80%;
+}
