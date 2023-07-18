@@ -42,6 +42,7 @@ img {
   position: absolute;
   top: 5rem;
   left: 20vw;
+  display: none;
 }
 .pencil-width-container {
   height: 2rem;
@@ -81,7 +82,7 @@ img {
   position: absolute;
   top: 5rem;
   left: 32vw;
-  display: flex;
+  display: none;
   justify-content: center;
   align-items: center;
 }
