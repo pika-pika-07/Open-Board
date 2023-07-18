@@ -89,3 +89,15 @@ img {
 .eraser-tool-container input {
   width: 80%;
 }
+.scale-tools {
+  animation-name: scale-tools-animation;
+  animation-duration: 1s;
+}
+@keyframes scale-tools-animation {
+  0% {
+    transform: scale(0.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
