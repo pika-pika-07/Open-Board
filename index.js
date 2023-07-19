@@ -62,7 +62,7 @@ const actions = (minimizeIcon, removeIcon, stickyContainer, id) => {
   minimizeIcon.addEventListener("click", (e) => {});
 };
 
-const stickyNoteClick = () => {
+const stickyNoteClick = (e) => {
   let stickyContainer = document.createElement("div");
   let headerId = "header_" + Math.floor(Math.random() * 100000);
   stickyContainer.setAttribute("class", "sticky-container");
@@ -82,12 +82,7 @@ const stickyNoteClick = () => {
   let minimizeIcon = document.querySelector(".minimize");
   let removeIcon = document.querySelector(".remove");
 
-  stickyContainer.onmousedown = function (e) {
-    DragDrop(stickyContainer, e);
-  };
-  stickyContainer.ondragstart = function () {
-    return false;
-  };
+  DragDrop(stickyContainer, e);
 };
 
 const deleteNote = (id) => {
@@ -112,32 +107,38 @@ const minimizeNote = (id) => {
   }
 };
 const DragDrop = (element, event) => {
-  let shiftX = event.clientX - element.getBoundingClientRect().left;
-  let shiftY = event.clientY - element.getBoundingClientRect().top;
+  element.onmousedown = function (event) {
+    let shiftX = event.clientX - element.getBoundingClientRect().left;
+    let shiftY = event.clientY - element.getBoundingClientRect().top;
 
-  element.style.position = "absolute";
-  element.style.zIndex = 1000;
+    element.style.position = "absolute";
+    element.style.zIndex = 1000;
 
-  moveAt(event.pageX, event.pageY);
-
-  // moves the element at (pageX, pageY) coordinates
-  // taking initial shifts into account
-  function moveAt(pageX, pageY) {
-    element.style.left = pageX - shiftX + "px";
-    element.style.top = pageY - shiftY + "px";
-  }
-
-  function onMouseMove(event) {
     moveAt(event.pageX, event.pageY);
-  }
 
-  // move the element on mousemove
-  document.addEventListener("mousemove", onMouseMove);
+    // moves the element at (pageX, pageY) coordinates
+    // taking initial shifts into account
+    function moveAt(pageX, pageY) {
+      element.style.left = pageX - shiftX + "px";
+      element.style.top = pageY - shiftY + "px";
+    }
 
-  // drop the element, remove unneeded handlers
-  element.onmouseup = function () {
-    document.removeEventListener("mousemove", onMouseMove);
-    element.onmouseup = null;
+    function onMouseMove(event) {
+      moveAt(event.pageX, event.pageY);
+    }
+
+    // move the ball on mousemove
+    document.addEventListener("mousemove", onMouseMove);
+
+    // drop the ball, remove unneeded handlers
+    element.onmouseup = function () {
+      document.removeEventListener("mousemove", onMouseMove);
+      element.onmouseup = null;
+    };
+  };
+
+  element.ondragstart = function () {
+    return false;
   };
 };
 
@@ -150,19 +151,25 @@ const uploadCLick = (event) => {
     let uploadedFile = input.files[0];
     let url = URL.createObjectURL(uploadedFile);
     let stickyContainer = document.createElement("div");
+    let headerId = "header_" + Math.floor(Math.random() * 100000);
     stickyContainer.setAttribute("class", "sticky-container");
-    stickyContainer.innerHTML = `
-          <div class="header-container">
-              <div class="minimize"></div>
-              <div class="remove"></div>
-          </div>
-          <div class="notes-container">
-              <img src = "${url}"/>
-          </div>
-        `;
+    stickyContainer.setAttribute("id", `${headerId}`);
+    const myhtml = ` 
+    <div class="header-container">
+      <div class="minimize" onClick="minimizeNote(${headerId})"></div>
+      <div class="remove" onClick="deleteNote(${headerId})"></div>
+    </div>
+    <div class="notes-container">
+      <img src="${url}"/>
+    </div>`;
+    stickyContainer.innerHTML = myhtml;
+
     document.body.appendChild(stickyContainer);
-    DragDrop(stickyContainer, event);
-    actions(stickyContainer);
+
+    let minimizeIcon = document.querySelector(".minimize");
+    let removeIcon = document.querySelector(".remove");
+
+    DragDrop(stickyContainer, e);
   });
 };
 
