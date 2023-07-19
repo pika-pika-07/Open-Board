@@ -3,12 +3,15 @@ let showOptions = true;
 let toolsContainer = document.querySelector(".tools-container");
 let pencilContainer = document.querySelector(".pencil-tool-container");
 let eraserToolContainer = document.querySelector(".eraser-tool-container");
+let stickyContainer = document.querySelector(".sticky-container");
+
 let icon = optionsContainer.children[0];
 let pencilIcon = document.querySelector(".pencil");
 let eraserIcon = document.querySelector(".eraser");
+let stickyNoteIcon = document.querySelector(".stickyNote");
 let showPencil = false;
 let showEraser = false;
-
+let showNoteEditor = false;
 const onClick = (event) => {
   showOptions = !showOptions;
   if (showOptions) {
@@ -35,6 +38,14 @@ const eraserClick = () => {
     eraserToolContainer.style.display = "none";
   }
 };
+const stickyNoteClick = () => {
+  showNoteEditor = !showNoteEditor;
+  if (showNoteEditor) {
+    stickyContainer.style.display = "block";
+  } else {
+    stickyContainer.style.display = "none";
+  }
+};
 
 const openTools = () => {
   icon.classList.remove("fa-bars");
@@ -53,3 +64,4 @@ const closeTools = () => {
 optionsContainer.addEventListener("click", onClick);
 pencilIcon.addEventListener("click", pencilCLick);
 eraserIcon.addEventListener("click", eraserClick);
+stickyNoteIcon.addEventListener("click", stickyNoteClick);
