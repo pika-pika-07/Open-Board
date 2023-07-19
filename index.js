@@ -12,6 +12,23 @@ let uploadIcon = document.querySelector(".upload");
 let showPencil = false;
 let showEraser = false;
 let showNoteEditor = false;
+
+const uploadHTML = ` 
+<div class="header-container">
+  <div class="minimize" onClick="minimizeNote(${headerId})"></div>
+  <div class="remove" onClick="deleteNote(${headerId})"></div>
+</div>
+<div class="notes-container">
+  <img src="${url}"/>
+</div>`;
+
+const noteHTML = `<div class="header-container">
+<div class="minimize" onClick="minimizeNote(${headerId})"></div>
+<div class="remove" onClick="deleteNote(${headerId})"></div>
+</div>
+<div class="notes-container">
+<textarea spellcheck="false"></textarea>
+</div>`;
 const onClick = (event) => {
   showOptions = !showOptions;
   if (showOptions) {
@@ -67,15 +84,8 @@ const stickyNoteClick = (e) => {
   let headerId = "header_" + Math.floor(Math.random() * 100000);
   stickyContainer.setAttribute("class", "sticky-container");
   stickyContainer.setAttribute("id", `${headerId}`);
-  const myhtml = ` 
-  <div class="header-container">
-    <div class="minimize" onClick="minimizeNote(${headerId})"></div>
-    <div class="remove" onClick="deleteNote(${headerId})"></div>
-  </div>
-  <div class="notes-container">
-    <textarea spellcheck="false"></textarea>
-  </div>`;
-  stickyContainer.innerHTML = myhtml;
+
+  stickyContainer.innerHTML = noteHTML;
 
   document.body.appendChild(stickyContainer);
 
@@ -154,15 +164,8 @@ const uploadCLick = (event) => {
     let headerId = "header_" + Math.floor(Math.random() * 100000);
     stickyContainer.setAttribute("class", "sticky-container");
     stickyContainer.setAttribute("id", `${headerId}`);
-    const myhtml = ` 
-    <div class="header-container">
-      <div class="minimize" onClick="minimizeNote(${headerId})"></div>
-      <div class="remove" onClick="deleteNote(${headerId})"></div>
-    </div>
-    <div class="notes-container">
-      <img src="${url}"/>
-    </div>`;
-    stickyContainer.innerHTML = myhtml;
+
+    stickyContainer.innerHTML = uploadHTML;
 
     document.body.appendChild(stickyContainer);
 
