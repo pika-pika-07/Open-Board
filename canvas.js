@@ -35,6 +35,10 @@ canvas.height = window.innerHeight;
 let pencilColor = document.querySelectorAll(".pencil-color");
 let pencilWidthElement = document.querySelector(".pencil-width");
 let eraserWidthElement = document.querySelector(".eraser-width");
+let downloadIcon = document.querySelector(".download");
+let redoIcon = document.querySelector(".redo");
+let undoIcon = document.querySelector(".undo");
+
 let penColor = "red";
 let pencilWidth = pencilWidthElement.value;
 let eraserWidth = eraserWidthElement.value;
@@ -44,6 +48,8 @@ let tool = canvas.getContext("2d");
 tool.strokeStyle = penColor;
 tool.lineWidth = pencilWidth;
 let mousedown = false;
+let undoRedo = [];
+let tracker = 0;
 
 canvas.addEventListener("mousedown", (e) => {
   mousedown = true;
@@ -64,6 +70,9 @@ canvas.addEventListener("mousemove", (e) => {
 
 canvas.addEventListener("mouseup", (e) => {
   mousedown = false;
+  let url = canvas.toDataURL("image/jpeg", 1.0);
+  undoRedo.push(url);
+  tracker = undoRedo.length - 1;
 });
 
 const beginPath = (strokeOj) => {
@@ -76,6 +85,34 @@ const drawStroke = (strokeOj) => {
   tool.lineWidth = strokeOj.width;
   tool.lineTo(strokeOj.x, strokeOj.y); // Makes a line
   tool.stroke();
+};
+
+const undoRedoCanvas = (trackObj) => {
+  //REinitialise track and undoRedo
+  //   let { tracker, undoRedo } = trackObj;
+  tracker = trackObj.tracker;
+  undoRedo = trackObj.undoRedo;
+
+  // Fetch last URl
+  let url = undoRedo[tracker];
+  let img = new Image(); // New Inage
+
+  //"https://picsum.photos/200/300";
+  img.src = url;
+
+  // Do something on image load
+  // draw an image from the previous canvas state
+  // Previous canvas state is stored as URL above
+  // and that state is converted to a new image
+  // Then we use drawImage method of tool to create a new graphic
+  //   tool.fillRect(50, 50, 500, 500);
+  img.onload = (e) => {
+    tool.drawImage(img, 0, 0, canvas.width, canvas.height); // start from 0,0 and fill with entire canvas height and width
+    // tool.fillStyle = "white";
+
+    //draw background / rect on entire canvas
+    // tool.fillRect(0, 0, canvas.width, canvas.height);
+  };
 };
 
 pencilColor.forEach((colorElement) => {
@@ -106,4 +143,32 @@ eraserIcon.addEventListener("click", (e) => {
     tool.strokeStyle = penColor;
     tool.lineWidth = pencilWidth;
   }
+});
+
+downloadIcon.addEventListener("click", (e) => {
+  let url = canvas.toDataURL(); // Converts a Url of the entire canvas graphic drawn
+
+  // Steps to download something
+  let anchor = document.createElement("a");
+  anchor.href = url;
+  anchor.download = "board.jpg";
+  anchor.click();
+});
+
+redoIcon.addEventListener("click", (e) => {
+  if (tracker < undoRedo.length - 1) {
+    tracker++;
+  }
+  undoRedoCanvas({ tracker, undoRedo });
+});
+
+undoIcon.addEventListener("click", (e) => {
+  if (tracker > 0) {
+    tracker--;
+  }
+  let trackObj = {
+    trackValue: tracker,
+    undoRedo,
+  };
+  undoRedoCanvas({ tracker, undoRedo });
 });
