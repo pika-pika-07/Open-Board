@@ -13,22 +13,6 @@ let showPencil = false;
 let showEraser = false;
 let showNoteEditor = false;
 
-const uploadHTML = ` 
-<div class="header-container">
-  <div class="minimize" onClick="minimizeNote(${headerId})"></div>
-  <div class="remove" onClick="deleteNote(${headerId})"></div>
-</div>
-<div class="notes-container">
-  <img src="${url}"/>
-</div>`;
-
-const noteHTML = `<div class="header-container">
-<div class="minimize" onClick="minimizeNote(${headerId})"></div>
-<div class="remove" onClick="deleteNote(${headerId})"></div>
-</div>
-<div class="notes-container">
-<textarea spellcheck="false"></textarea>
-</div>`;
 const onClick = (event) => {
   showOptions = !showOptions;
   if (showOptions) {
@@ -85,7 +69,13 @@ const stickyNoteClick = (e) => {
   stickyContainer.setAttribute("class", "sticky-container");
   stickyContainer.setAttribute("id", `${headerId}`);
 
-  stickyContainer.innerHTML = noteHTML;
+  stickyContainer.innerHTML = `<div class="header-container">
+  <div class="minimize" onClick="minimizeNote(${headerId})"></div>
+  <div class="remove" onClick="deleteNote(${headerId})"></div>
+  </div>
+  <div class="notes-container">
+  <textarea spellcheck="false"></textarea>
+  </div>`;
 
   document.body.appendChild(stickyContainer);
 
@@ -165,7 +155,14 @@ const uploadCLick = (event) => {
     stickyContainer.setAttribute("class", "sticky-container");
     stickyContainer.setAttribute("id", `${headerId}`);
 
-    stickyContainer.innerHTML = uploadHTML;
+    stickyContainer.innerHTML = ` 
+    <div class="header-container">
+      <div class="minimize" onClick="minimizeNote(${headerId})"></div>
+      <div class="remove" onClick="deleteNote(${headerId})"></div>
+    </div>
+    <div class="notes-container">
+      <img src="${url}"/>
+    </div>`;
 
     document.body.appendChild(stickyContainer);
 
