@@ -53,7 +53,12 @@ canvas.addEventListener("mousedown", (e) => {
 canvas.addEventListener("mousemove", (e) => {
   // Only if mouse is up and clicked
   if (mousedown) {
-    drawStroke({ x: e.clientX, y: e.clientY });
+    drawStroke({
+      x: e.clientX,
+      y: e.clientY,
+      color: showEraser ? eraserColor : penColor,
+      width: showEraser ? eraserWidth : pencilWidth,
+    });
   }
 });
 
@@ -67,6 +72,8 @@ const beginPath = (strokeOj) => {
 };
 
 const drawStroke = (strokeOj) => {
+  tool.strokeStyle = strokeOj.color;
+  tool.lineWidth = strokeOj.width;
   tool.lineTo(strokeOj.x, strokeOj.y); // Makes a line
   tool.stroke();
 };
@@ -77,4 +84,26 @@ pencilColor.forEach((colorElement) => {
     penColor = color;
     tool.strokeStyle = penColor;
   });
+});
+
+pencilWidthElement.addEventListener("change", (e) => {
+  pencilWidth = pencilWidthElement.value;
+  tool.lineWidth = pencilWidth;
+});
+
+eraserWidthElement.addEventListener("change", (e) => {
+  eraserWidth = eraserWidthElement.value;
+  tool.lineWidth = eraserWidth;
+});
+
+eraserIcon.addEventListener("click", (e) => {
+  if (showEraser) {
+    // if eraser is active then the stroke styles should be of eraser color which will be white by default
+    tool.strokeStyle = eraserColor;
+    tool.lineWidth = eraserWidth;
+  } else {
+    // if eraser is inactive then the stroke styles should be of pencil
+    tool.strokeStyle = penColor;
+    tool.lineWidth = pencilWidth;
+  }
 });
