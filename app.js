@@ -8,12 +8,14 @@ const port = process.env.PORT || 3000;
 
 // listens and returns a server
 let server = app.listen(port, () => {
-  console.log("Listening tpo port" + port);
+  console.log("Listening to port" + port);
 });
 
 let io = require("socket.io")(server, {
   cors: {
     origin: "https://my-draw-board.netlify.app/",
+    methods: ["GET", "POST"],
+    allowedHeaders: ["Access-Control-Allow-Origin"],
   },
 });
 // let io = socket(server);
