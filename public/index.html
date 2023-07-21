@@ -49,7 +49,7 @@
         // we can access io bec of the script tag above which includes socket cdn
         // Connect socket on FE through CDN
         // which eventually will connect to BE via below line
-        let socket = io.connect("http://localhost:3000") // Will connect it to socket in Backend i.e app.js
+        let socket = io.connect("https://my-draw-board.netlify.app/") // Will connect it to socket in Backend i.e app.js
         // so if we hit localhost:3000 in browser a socket connection will be established
         // everytime we hit localhost:3000 in different browsers or chrome tabs a new connection will be established
 
