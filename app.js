@@ -31,7 +31,7 @@ io.on("connection", (socket) => {
   socket.on("beginPath", (data) => {
     // data is comiung from FE server via socket
     // Now socket will transfer all the data to connected CLient COmputers(FE server)
-    io.sockets.emit("behinPath", data);
+    io.sockets.emit("beginPath", data);
   });
 
   socket.on("drawStroke", (data) => {
