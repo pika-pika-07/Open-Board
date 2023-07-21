@@ -1,5 +1,5 @@
 const express = require("express"); // Access express server
-const socket = require("socket.io");
+//const socket = require("socket.io");
 const cors = require("cors");
 const app = express(); // Initialised and server ready
 app.use(cors());
@@ -11,7 +11,12 @@ let server = app.listen(port, () => {
   console.log("Listening tpo port" + port);
 });
 
-let io = socket(server);
+let io = require("socket.io")(server, {
+  cors: {
+    origin: "*",
+  },
+});
+// let io = socket(server);
 
 /* 
     How it works
