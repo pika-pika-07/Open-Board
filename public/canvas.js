@@ -53,18 +53,34 @@ let tracker = 0;
 
 canvas.addEventListener("mousedown", (e) => {
   mousedown = true;
-  beginPath({ x: e.clientX, y: e.clientY });
+  //beginPath({ x: e.clientX, y: e.clientY });
+
+  let data = {
+    x: e.clientX,
+    y: e.clientY,
+  };
+  socket.emit("beginPath", data); // emits data to server through the socket
+  // we get the access tpo socket varible here as we defined this variable in script tag in index.html and
+  //canvas.js is included after that tag, so all varibles and functions defined above will get referenced to below script tag files
 });
 
 canvas.addEventListener("mousemove", (e) => {
   // Only if mouse is up and clicked
+
   if (mousedown) {
-    drawStroke({
+    let data = {
       x: e.clientX,
       y: e.clientY,
       color: showEraser ? eraserColor : penColor,
       width: showEraser ? eraserWidth : pencilWidth,
-    });
+    };
+    socket.emit("drawStroke", data);
+    // drawStroke({
+    //   x: e.clientX,
+    //   y: e.clientY,
+    //   color: showEraser ? eraserColor : penColor,
+    //   width: showEraser ? eraserWidth : pencilWidth,
+    // });
   }
 });
 
@@ -159,16 +175,47 @@ redoIcon.addEventListener("click", (e) => {
   if (tracker < undoRedo.length - 1) {
     tracker++;
   }
-  undoRedoCanvas({ tracker, undoRedo });
+  let data = {
+    tracker,
+    undoRedo,
+  };
+  socket.emit("undo", data);
+  // undoRedoCanvas({ tracker, undoRedo });
 });
 
 undoIcon.addEventListener("click", (e) => {
   if (tracker > 0) {
     tracker--;
   }
-  let trackObj = {
-    trackValue: tracker,
+  let data = {
+    tracker,
     undoRedo,
   };
-  undoRedoCanvas({ tracker, undoRedo });
+  socket.emit("undo", data);
+  //undoRedoCanvas({ tracker, undoRedo });
+});
+
+// This will get triggered after the BE server sends data to Client bComputer via socket
+socket.on("beginPath", (data) => {
+  // data from BE server
+  // perform something
+  beginPath(data); // beginPath is the function that draws. Defined on line 86
+});
+
+socket.on("drawStroke", (data) => {
+  // data from BE server
+  // perform something
+  drawStroke(data); // drawStroke is the function that draws. Defined on line 98
+});
+
+socket.on("undo", (data) => {
+  // data from BE server
+  // perform something
+  undoRedoCanvas(data); // undoRedoCanvas is the function that draws. Defined on line 105
+});
+
+socket.on("redo", (data) => {
+  // data from BE server
+  // perform something
+  undoRedoCanvas(data); // undoRedoCanvas is the function that draws. Defined on line 105
 });
