@@ -1,24 +1,17 @@
 const express = require("express"); // Access express server
-//const socket = require("socket.io");
+const socket = require("socket.io");
 const cors = require("cors");
 const app = express(); // Initialised and server ready
 app.use(cors());
 app.use(express.static("public"));
-const port = process.env.PORT || 3000;
+const port = 3000;
 
 // listens and returns a server
 let server = app.listen(port, () => {
   console.log("Listening to port" + port);
 });
 
-let io = require("socket.io")(server, {
-  cors: {
-    origin: "*",
-    methods: ["GET", "POST"],
-    allowedHeaders: ["Access-Control-Allow-Origin"],
-  },
-});
-// let io = socket(server);
+let io = socket(server);
 
 /* 
     How it works

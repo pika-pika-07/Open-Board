@@ -179,7 +179,7 @@ redoIcon.addEventListener("click", (e) => {
     tracker,
     undoRedo,
   };
-  socket.emit("undo", data);
+  socket.emit("redo", data);
   // undoRedoCanvas({ tracker, undoRedo });
 });
 
