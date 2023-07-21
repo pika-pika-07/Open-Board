@@ -1,8 +1,8 @@
 const express = require("express"); // Access express server
 const socket = require("socket.io");
-
+const cors = require("cors");
 const app = express(); // Initialised and server ready
-
+app.use(cors());
 app.use(express.static("public"));
 const port = process.env.PORT || 3000;
 
