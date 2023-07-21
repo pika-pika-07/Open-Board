@@ -13,7 +13,7 @@ let server = app.listen(port, () => {
 
 let io = require("socket.io")(server, {
   cors: {
-    origin: "*",
+    origin: "https://master--my-draw-board.netlify.app",
   },
 });
 // let io = socket(server);
