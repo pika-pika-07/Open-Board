@@ -4,39 +4,23 @@ const cors = require("cors");
 const { createServer } = require("http");
 const { Server } = require("socket.io");
 const app = express(); // Initialised and server ready
-// const corsOptions = {
-//   origin: "http://localhost:3000",
-//   credentials: true, //access-control-allow-credentials:true
-//   optionSuccessStatus: 200,
-// };
 
 app.use(express.static("public"));
-// app.use((req, res, next) => {
-//   res.header("Access-Control-Allow-Origin", "*");
-//   res.header(
-//     "Access-Control-Allow-Headers",
-//     "Origin, X-Requested-With, Content-Type, Accept"
-//   );
-//   next();
-// });
+
 const isDev = process.env.NODE_ENV === "development";
-console.log("Env issss", app.settings.env);
+
 const URL = isDev
   ? "http://localhost:3000"
   : "https://draw-board-vedw.onrender.com";
 app.use(cors({ origin: URL }));
 
-// const port = 3000;
-
 // listens and returns a server
-let server = createServer(app);
+let httpServer = createServer(app);
+httpServer.listen(3000, () => {
+  console.log("server running at http://localhost:3000");
+});
 
-// let server = app.listen(port, () => {
-//   console.log("Listening to port" + port);
-// });
-
-// let io = socket(server);
-let io = new Server(server, { cors: URL });
+let io = new Server(httpServer, { cors: URL });
 
 /* 
     How it works
@@ -70,7 +54,4 @@ io.on("connection", (socket) => {
   socket.on("redo", (data) => {
     io.sockets.emit("redo", data);
   });
-});
-server.listen(3000, () => {
-  console.log("server running at http://localhost:3000");
 });
