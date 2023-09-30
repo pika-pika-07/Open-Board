@@ -86,7 +86,8 @@ canvas.addEventListener("mousemove", (e) => {
 
 canvas.addEventListener("mouseup", (e) => {
   mousedown = false;
-  let url = canvas.toDataURL("image/jpeg", 1.0);
+  let url = canvas.toDataURL("image/png");
+
   undoRedo.push(url);
   tracker = undoRedo.length - 1;
 });
@@ -111,10 +112,11 @@ const undoRedoCanvas = (trackObj) => {
 
   // Fetch last URl
   let url = undoRedo[tracker];
-  let img = new Image(); // New Inage
 
-  //"https://picsum.photos/200/300";
-  img.src = url;
+  let img = new Image(); // New Image
+
+  img.src =
+    "https://coolbackgrounds.io/images/backgrounds/white/pure-white-background-85a2a7fd.jpg";
 
   // Do something on image load
   // draw an image from the previous canvas state
@@ -123,7 +125,11 @@ const undoRedoCanvas = (trackObj) => {
   // Then we use drawImage method of tool to create a new graphic
   //   tool.fillRect(50, 50, 500, 500);
   img.onload = (e) => {
-    tool.drawImage(img, 0, 0, canvas.width, canvas.height); // start from 0,0 and fill with entire canvas height and width
+    // let tool1 = canvas.getContext("2d");
+    // tool.drawImage(img, 0, 0, canvas.width, canvas.height); // start from 0,0 and fill with entire canvas height and width
+    tool.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+    img.src = undoRedo[tracker];
     // tool.fillStyle = "white";
 
     //draw background / rect on entire canvas
