@@ -115,20 +115,25 @@ const undoRedoCanvas = (trackObj) => {
 
   let img = new Image(); // New Image
 
-  img.src =
-    "https://coolbackgrounds.io/images/backgrounds/white/pure-white-background-85a2a7fd.jpg";
-
   // Do something on image load
   // draw an image from the previous canvas state
   // Previous canvas state is stored as URL above
   // and that state is converted to a new image
   // Then we use drawImage method of tool to create a new graphic
   //   tool.fillRect(50, 50, 500, 500);
+  tool.clearRect(0, 0, canvas.width, canvas.height);
+  img.src = undoRedo[tracker];
+
   img.onload = (e) => {
     // let tool1 = canvas.getContext("2d");
     // tool.drawImage(img, 0, 0, canvas.width, canvas.height); // start from 0,0 and fill with entire canvas height and width
-    tool.drawImage(img, 0, 0, canvas.width, canvas.height);
+    this.onload = function () {
+      // hack to prevent infinte loop which is happening ocassionally
+    };
 
+    // document.getElementById("myCanvas").style.background = "pink";
+    // img.src = undoRedo[tracker];
+    tool.drawImage(img, 0, 0, canvas.width, canvas.height);
     img.src = undoRedo[tracker];
     // tool.fillStyle = "white";
 
