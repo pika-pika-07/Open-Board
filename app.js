@@ -4,6 +4,14 @@ const cors = require("cors");
 const app = express(); // Initialised and server ready
 app.use(cors());
 app.use(express.static("public"));
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
+  next();
+});
 const port = 3000;
 
 // listens and returns a server
