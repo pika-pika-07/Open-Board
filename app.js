@@ -19,10 +19,10 @@ app.use(express.static("public"));
 //   );
 //   next();
 // });
-const isDev = app.settings.env === "development";
+const isDev = process.env.NODE_ENV === "development";
 console.log("Env issss", app.settings.env);
-const URL = !isDev
-  ? "https://draw-board-vedw.onrender.com"
+const URL = isDev
+  ? "http://localhost:3000"
   : "https://draw-board-vedw.onrender.com";
 app.use(cors({ origin: URL }));
 
