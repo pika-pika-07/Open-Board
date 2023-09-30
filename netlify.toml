@@ -4,9 +4,9 @@
   from = "/*"
   to = "http://localhost:3000/socket.io/?EIO=4&transport=polling&t=OhZyNgz"
   force = true
-  headers = {X-From = “Netlify”}
+  headers = {X-From = "Netlify"}
   [[headers]]
-  for = "/”
+  for = "/"
   [headers.values]
-  Access-Control-Allow-Origin = “*”
+  Access-Control-Allow-Origin = "*"
 
