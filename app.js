@@ -24,7 +24,7 @@ let server = app.listen(port, () => {
   console.log("Listening to port" + port);
 });
 
-let io = socket(server);
+let io = socket("https://draw-board-vedw.onrender.com");
 
 /* 
     How it works
